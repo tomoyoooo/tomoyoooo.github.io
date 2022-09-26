@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Typecho搭建</title>
+      <link href="/2022/08/03/typecho/"/>
+      <url>/2022/08/03/typecho/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Typecho搭建博客"><a href="#Typecho搭建博客" class="headerlink" title="Typecho搭建博客"></a>Typecho搭建博客</h1><p>1.购买服务器</p><p>2.安装Apache以及扩展包</p><pre><code>yum -y install httpdyum -y install httpd-manual mod_ssl mod_perl mod_auth_mysql</code></pre><p>3.安装php以及扩展包</p><pre><code>yum -y install php-mysql php php-fpmyum -y install php-gd php-xml php-mbstring php-ldap php-pear php-xmlrpc php-devel</code></pre><p>4.安装mysql以及扩展包</p><pre><code>yum -y install mysqlwget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpmrpm -ivh mysql-community-release-el7-5.noarch.rpmyum install mysql-community-serveryum -y install mysql-connector-odbc mysql-devel libdbi-dbd-mysql</code></pre><p>5.设置Apache和mysql的开机启动</p><pre><code>systemctl enable httpd.servicesystemctl enable mysqld.service</code></pre><p>6.重启Apache,php和mysql</p><pre><code>service mysqld restartservice php-fpm restartservice httpd restart</code></pre><p>7.进入mysql设置mysql密码</p><pre><code>set password for &#39;root&#39;@&#39;localhost&#39; = password(&#39;你要设置的密码&#39;);create database typecho;grant all privileges on typecho.* to typecho@localhost identified by &#39;password&#39;;flush privileges;</code></pre><p>8.服务检查</p><pre><code>netstat –tulpn</code></pre><p>查看上述服务是否都正常开启<br>进入&#x2F;var&#x2F;www&#x2F;html 创建一个php文件检查是否能通过IP&#x2F;xxx.php访问</p><p>9.下载typecho压缩包并在&#x2F;var&#x2F;www&#x2F;html目录下解压缩，可以根据自己的想法来定义目录，访问install.php开启typecho安装(注意默认数据库)</p><pre><code>wget http://typecho.org/downloads/1.1-17.10.30-release.tar.gz tar -zxvf 1.1-17.10.30-release.tar.gzcd buildcp -rf ./* /var/www/html/</code></pre><p>10.安装成功后，可以进入<a href="https://typecho.me/">typecho模板站</a>来选择自己想要使用的模板，方便快捷。把模板下载解压后，移动到typecho安装目录的&#x2F;usr&#x2F;themes目录下，就可以在管理界面中的修改外观中选择使用。</p><p>11.推荐markdown在线编辑器<a href="https://pandao.github.io/editor.md/">Editor</a>,下载之后可以在typecho插件管理界面启动。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Blog </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Blog </tag>
+            
+            <tag> CentOS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hexo搭建</title>
+      <link href="/2022/08/03/hexo/"/>
+      <url>/2022/08/03/hexo/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Hexo搭建：centos-7-6-Node-js-16-16-0-LTS"><a href="#Hexo搭建：centos-7-6-Node-js-16-16-0-LTS" class="headerlink" title="Hexo搭建：centos 7.6, Node.js 16.16.0 LTS"></a>Hexo搭建：centos 7.6, Node.js 16.16.0 LTS</h1><ol><li><p>安装git<br> yum install git-core</p></li><li><p><a href="https://github.com/nodesource/distributions#rpminstall">安装Node.js</a><br> yum install gcc-c++ make+</p><p> curl -sL <a href="https://dl.yarnpkg.com/rpm/yarn.repo">https://dl.yarnpkg.com/rpm/yarn.repo</a> | tee &#x2F;etc&#x2F;yum.repos.d&#x2F;yarn.repo<br> yum install yarn</p><p> curl -fsSL <a href="https://rpm.nodesource.com/setup_lts.x">https://rpm.nodesource.com/setup_lts.x</a> | bash -<br> yum install -y nodejs</p></li><li><p>安装hexo</p><p> npm install -g hexo-cli<br> mkdir -p &#x2F;var&#x2F;www&#x2F;hexo<br> hexo init hexo(在&#x2F;var&#x2F;www 下创建文件夹hexo， 然后在www目录下进行此命令)<br> cd hexo<br> npm install</p><p> hexo generate<br> hexo s 此时开启4000端口防火墙，可以通过4000端口访问hexo主页面</p></li><li><p>安装并配置ngnix</p><p> yum install -y nginx<br> vi &#x2F;etc&#x2F;nginx&#x2F;nginx.conf<br> 修改如下内容<br> server{<br> root  &#x2F;var&#x2F;www&#x2F;hexo&#x2F;public(此处为hexo路径);<br> }</p><p> nginx -s reload 此时访问可以看见和第3步一样的页面，就是public下的index.html</p></li><li><p>下载主题</p><p>进入&#x2F;hexo&#x2F;themes<br>git clone <a href="https://github.com/blinkfox/hexo-theme-matery.git">https://github.com/blinkfox/hexo-theme-matery.git</a></p></li><li><p>配置主题<br>&#x2F;hexo中的_config.yml<br>修改下方Extensions内的theme</p><p>theme: hexo-theme-matery(主题文件夹名)</p><p>hexo clean<br>hexo generate 此时访问ip地址就可以看见新主题了</p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Blog </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Blog </tag>
+            
+            <tag> CentOS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
