@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>单调栈</title>
+      <link href="/2022/11/10/dan-diao-zhan/"/>
+      <url>/2022/11/10/dan-diao-zhan/</url>
+      
+        <content type="html"><![CDATA[<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><ol><li>作用：O(n)时间内找到离自己最近的最大值或最小值</li><li>性质：元素加入栈前会把栈顶破坏单调性的元素删除；一般使用单调栈的题目具有以下的两点：离自己最近（栈的后进先出的性质），比自己大（小）、高(低)。</li></ol><h2 id="leetcode-654-最大二叉树"><a href="#leetcode-654-最大二叉树" class="headerlink" title="leetcode 654.最大二叉树"></a>leetcode 654.最大二叉树</h2><pre class="line-numbers language-none"><code class="language-none">class Solution &#123;public:    TreeNode* constructMaximumBinaryTree(vector&lt;int&gt;&amp; nums) &#123;        int n &#x3D; nums.size();        stack&lt;int&gt; st;        vector&lt;int&gt; left(n, -1);        vector&lt;int&gt; right(n, -1);        vector&lt;TreeNode*&gt; tree(n);        for(int i &#x3D; 0; i &lt; n; ++i)&#123;            tree[i] &#x3D; new TreeNode(nums[i]);            while(!st.empty() &amp;&amp; nums[st.top()] &lt; nums[i])&#123;                right[st.top()] &#x3D; i;                st.pop();            &#125;            if(!st.empty())&#123;                left[i] &#x3D; st.top();            &#125;            st.push(i);        &#125;        &#x2F;&#x2F;cout &lt;&lt; 1 &lt;&lt; endl;        TreeNode* root &#x3D; nullptr;        for(int i &#x3D; 0; i &lt; n; ++i)&#123;            if(left[i]&#x3D;&#x3D;-1 &amp;&amp; right[i]&#x3D;&#x3D;-1)&#123;                root &#x3D; tree[i];            &#125;            else if(right[i]&#x3D;&#x3D;-1 || (left[i]!&#x3D;-1 &amp;&amp; right[i]!&#x3D;-1 &amp;&amp; nums[left[i]] &lt; nums[right[i]]))&#123;                tree[left[i]]-&gt;right &#x3D; tree[i];            &#125;            else&#123;                tree[right[i]]-&gt;left &#x3D; tree[i];            &#125;        &#125;        return root;    &#125;&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="洛谷-P5788【模板】单调栈"><a href="#洛谷-P5788【模板】单调栈" class="headerlink" title="洛谷 P5788【模板】单调栈"></a>洛谷 P5788【模板】单调栈</h2><pre class="line-numbers language-none"><code class="language-none">#include&lt;iostream&gt;#include&lt;stack&gt;using namespace std;int a[3000001],b[3000001];stack&lt;int&gt;st;int main()&#123;    int n;    cin&gt;&gt;n;    for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;        cin&gt;&gt;a[i];    &#125;    for(int i&#x3D;n;i&gt;&#x3D;1;i--)&#123;        while(!st.empty()&amp;&amp;a[st.top()]&lt;&#x3D;a[i])&#123;            st.pop();        &#125;        if(st.empty())&#123;            b[i]&#x3D;0;        &#125;        else&#123;            b[i]&#x3D;st.top();        &#125;        st.push(i);    &#125;    for(int i&#x3D;1;i&lt;&#x3D;n;i++)&#123;        cout&lt;&lt;b[i]&lt;&lt;&quot; &quot;;    &#125;    return 0;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 算法与数据结构 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Typecho搭建</title>
       <link href="/2022/08/03/typecho/"/>
       <url>/2022/08/03/typecho/</url>
