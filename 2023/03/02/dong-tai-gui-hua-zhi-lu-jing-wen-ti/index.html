@@ -1,0 +1,1535 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="动态规划之路径问题, Tomoyo">
+    <meta name="description" content="动态规划之路径问题1.动态规划的基础思路
+状态是否具有后效性：也就是对于某个状态来说，我们只需要关注前一步状态到当前状态是如何转化的，而不需要关心之前的状态，就是无后效性的。
+
+如何定义状态：一般和结尾、答案等是有关联的。(比如最小路径和的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+
+    <title>动态规划之路径问题 | Tomoyo</title>
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Tomoyo</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Tomoyo</div>
+        <div class="logo-desc">
+            
+            Do it easily, Konw it deeply
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">动态规划之路径问题</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                                <span class="chip bg-color">动态规划</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-03-02
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="动态规划之路径问题"><a href="#动态规划之路径问题" class="headerlink" title="动态规划之路径问题"></a>动态规划之路径问题</h1><h2 id="1-动态规划的基础思路"><a href="#1-动态规划的基础思路" class="headerlink" title="1.动态规划的基础思路"></a>1.动态规划的基础思路</h2><ol>
+<li><p>状态是否具有后效性：也就是对于某个状态来说，我们只需要关注前一步状态到当前状态是如何转化的，而不需要关心之前的状态，就是无后效性的。</p>
+</li>
+<li><p>如何定义状态：一般和结尾、答案等是有关联的。(比如最小路径和的dp数组代表的就是当前最小的路径和)</p>
+</li>
+<li><p>如何确定状态转移方程：可以从最后一步来进行分类讨论。</p>
+</li>
+<li><p>对状态转移的要求</p>
+<blockquote>
+<p>1)求最值等问题中，只需要要求不漏，因为重复不影响结果</p>
+<p>2)求方案数等问题中，则需要不重不漏</p>
+</blockquote>
+</li>
+<li><p>动态规划的时间复杂度往往和空间复杂度相关</p>
+</li>
+</ol>
+<h2 id="2-记录经历的路径"><a href="#2-记录经历的路径" class="headerlink" title="2.记录经历的路径"></a>2.记录经历的路径</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//注意点1：倒着记录，所以存储好之后要逆序处理一次</span>
+<span class="token comment">//注意点2：二维网格每个点的idx处理可以只利用一维数组</span>
+<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> m<span class="token punctuation">,</span> n<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">minPathSum</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> grid<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        
+        m <span class="token operator">=</span> grid<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        n <span class="token operator">=</span> grid<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> f <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> g <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>m <span class="token operator">*</span> n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> grid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">int</span> top  <span class="token operator">=</span> i <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">?</span> f<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">+</span> grid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">;</span>
+                    <span class="token keyword">int</span> left <span class="token operator">=</span> j <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">?</span> f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> grid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">;</span>
+                    f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>top<span class="token punctuation">,</span> left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    g<span class="token punctuation">[</span><span class="token function">getIdx</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> top <span class="token operator">&lt;</span> left <span class="token operator">?</span> <span class="token function">getIdx</span><span class="token punctuation">(</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> j<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">getIdx</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        
+        <span class="token comment">// 从「结尾」开始，在 g[] 数组中找「上一步」</span>
+        <span class="token keyword">int</span> idx <span class="token operator">=</span> <span class="token function">getIdx</span><span class="token punctuation">(</span>m <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 逆序将路径点添加到 path 数组中</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> path <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>m <span class="token operator">+</span> n<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        path<span class="token punctuation">[</span>m <span class="token operator">+</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span>m <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m <span class="token operator">+</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            path<span class="token punctuation">[</span>m <span class="token operator">+</span> n <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">-</span> i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">parseIdx</span><span class="token punctuation">(</span>g<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            idx <span class="token operator">=</span> g<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 顺序输出位置</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m <span class="token operator">+</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> x <span class="token operator">=</span> path<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> y <span class="token operator">=</span> path<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"("</span> <span class="token operator">+</span> x <span class="token operator">+</span> <span class="token string">","</span> <span class="token operator">+</span> y <span class="token operator">+</span> <span class="token string">") "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">return</span> f<span class="token punctuation">[</span>m <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">parseIdx</span><span class="token punctuation">(</span><span class="token keyword">int</span> idx<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span>idx <span class="token operator">/</span> n<span class="token punctuation">,</span> idx <span class="token operator">%</span> n<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> <span class="token function">getIdx</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> x <span class="token operator">*</span> n <span class="token operator">+</span> y<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="3-空间优化"><a href="#3-空间优化" class="headerlink" title="3.空间优化"></a>3.空间优化</h2><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;Leetcode120.三角形最小路径和
+&#x2F;&#x2F;额外可参考Leetcode931.下降路径最小和
+&#x2F;&#x2F;滚动数组
+&#x2F;&#x2F;利用DP数组特性进行进一步优化
+class Solution &#123;
+public:
+    int minimumTotal(vector&lt;vector&lt;int&gt;&gt;&amp; triangle) &#123;
+        &#x2F;*
+        int n &#x3D; triangle.size();
+        int ans &#x3D; INT_MAX;
+        vector&lt;vector&lt;int&gt;&gt; dp(n, vector&lt;int&gt;(n,INT_MAX));
+        dp[0][0] &#x3D; triangle[0][0];
+        for(int i &#x3D; 1; i &lt; n; ++i)&#123;
+            for(int j &#x3D; 0; j &lt; i+1; ++j)&#123;
+                if(j!&#x3D;0) dp[i][j] &#x3D; min(dp[i][j], dp[i-1][j-1]+triangle[i][j]);
+                if(j!&#x3D;i) dp[i][j] &#x3D; min(dp[i][j], dp[i-1][j]+triangle[i][j]);
+            &#125;
+        &#125;
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            ans &#x3D; min(dp[n-1][i], ans);
+        &#125;
+        return ans;
+        *&#x2F;
+
+        &#x2F;*
+        &#x2F;&#x2F;利用滚动数组进行空间优化
+        int n &#x3D; triangle.size();
+        int ans &#x3D; INT_MAX;
+        &#x2F;&#x2F;滚动数组不能直接赋初值
+        vector&lt;vector&lt;int&gt;&gt; dp(2, vector&lt;int&gt;(n));
+        dp[0][0] &#x3D; triangle[0][0];
+        for(int i &#x3D; 1; i &lt; n; ++i)&#123;
+            for(int j &#x3D; 0; j &lt; i+1; ++j)&#123;
+                &#x2F;&#x2F;需要每次都重置当前使用的行
+                dp[i&amp;1][j] &#x3D; INT_MAX;
+                if(j!&#x3D;0) dp[i&amp;1][j] &#x3D; min(dp[i&amp;1][j], dp[(i-1)&amp;1][j-1]+triangle[i][j]);
+                if(j!&#x3D;i) dp[i&amp;1][j] &#x3D; min(dp[i&amp;1][j], dp[(i-1)&amp;1][j]+triangle[i][j]);
+            &#125;
+        &#125;
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            ans &#x3D; min(ans, dp[(n-1)&amp;1][i]);
+        &#125;
+        return ans;
+        *&#x2F;
+
+        &#x2F;*
+        &#x2F;&#x2F;进一步的空间优化
+        int n &#x3D; triangle.size();
+        vector&lt;int&gt; f(n);
+        f[0] &#x3D; triangle[0][0];
+        for (int i &#x3D; 1; i &lt; n; ++i) &#123;
+            f[i] &#x3D; f[i - 1] + triangle[i][i];
+            for (int j &#x3D; i - 1; j &gt; 0; --j) &#123;
+                f[j] &#x3D; min(f[j - 1], f[j]) + triangle[i][j];
+            &#125;
+            f[0] +&#x3D; triangle[i][0];
+        &#125;
+        return *min_element(f.begin(), f.end());
+        *&#x2F;
+
+        &#x2F;&#x2F;由底到顶
+        vector&lt;int&gt; dp(triangle.back());
+        cout &lt;&lt; dp.size() &lt;&lt; endl;
+        for(int i &#x3D; triangle.size() - 2; i &gt;&#x3D; 0; i --)
+            for(int j &#x3D; 0; j &lt;&#x3D; i; j ++)
+                dp[j] &#x3D; min(dp[j], dp[j + 1]) + triangle[i][j];
+        return dp[0];
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="4-时间优化"><a href="#4-时间优化" class="headerlink" title="4.时间优化"></a>4.时间优化</h2><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;1.考虑状态转移时是否有多余部分
+&#x2F;&#x2F;2.考虑使用的条件(如此题的上行值)，是否是固定操作(只需要最小值和次小值)
+class Solution &#123;
+public:
+    int minFallingPathSum(vector&lt;vector&lt;int&gt;&gt;&amp; grid) &#123;
+        &#x2F;*
+        int n &#x3D; grid.size();
+        if(n&#x3D;&#x3D;1) return grid[0][0];
+        vector&lt;vector&lt;int&gt;&gt; dp(n, vector&lt;int&gt;(n));
+
+        for(int i &#x3D; 0; i &lt; n; ++i) dp[0][i] &#x3D; grid[0][i];
+        for(int i &#x3D; 1; i &lt; n; ++i)&#123;
+            for(int j &#x3D; 0; j &lt; n; ++j)&#123;
+                dp[i][j] &#x3D; INT_MAX;
+                for(int k &#x3D; 0; k &lt; n; ++k)&#123;
+                    if(k!&#x3D;j)&#123;
+                        dp[i][j] &#x3D; min(dp[i][j], dp[i-1][k]);
+                    &#125;
+                &#125;
+                dp[i][j] +&#x3D; grid[i][j];
+            &#125;
+        &#125;
+        int ans &#x3D; INT_MAX;
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            ans &#x3D; min(ans, dp[n-1][i]);
+        &#125;
+        return ans;
+        *&#x2F;
+
+        &#x2F;&#x2F;考虑到只会用到最小值和次小值
+        int n &#x3D; grid.size();
+        if(n&#x3D;&#x3D;1) return grid[0][0];
+        vector&lt;vector&lt;int&gt;&gt; dp(n, vector&lt;int&gt;(n));
+        int pre &#x3D; -1;
+        int minn &#x3D; -1;
+
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            dp[0][i] &#x3D; grid[0][i];
+            if(dp[0][i]&lt;&#x3D;(minn&#x3D;&#x3D;-1 ? INT_MAX : dp[0][minn]))&#123;
+                pre &#x3D; minn;
+                minn &#x3D; i;
+            &#125;
+            else if(dp[0][i]&lt;&#x3D;(pre&#x3D;&#x3D;-1 ? INT_MAX : dp[0][pre]))&#123;
+                pre &#x3D; i;
+            &#125;
+        &#125; 
+
+        for(int i &#x3D; 1; i &lt; n; ++i)&#123;
+            int mintemp &#x3D; -1;
+            int pretemp &#x3D; -1;
+            for(int j &#x3D; 0; j &lt; n; ++j)&#123;
+                &#x2F;&#x2F;dp[i][j] &#x3D; INT_MAX;
+                if(j&#x3D;&#x3D;minn)&#123;
+                    dp[i][j] &#x3D; dp[i-1][pre] + grid[i][j];
+                &#125;
+                else&#123;
+                    dp[i][j] &#x3D; dp[i-1][minn] + grid[i][j];
+                &#125;
+                if(dp[i][j]&lt;&#x3D;(mintemp&#x3D;&#x3D;-1 ? INT_MAX : dp[i][mintemp]))&#123;
+                    pretemp &#x3D; mintemp;
+                    mintemp &#x3D; j;
+                &#125;
+                else if(dp[i][j]&lt;&#x3D;(pretemp&#x3D;&#x3D;-1 ? INT_MAX : dp[i][pretemp]))&#123;
+                    pretemp &#x3D; j;
+                &#125;
+            &#125;
+            minn &#x3D; mintemp;
+            pre &#x3D; pretemp;
+        &#125;
+        int ans &#x3D; INT_MAX;
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            ans &#x3D; min(ans, dp[n-1][i]);
+        &#125;
+        return ans;
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="5-记忆化搜索"><a href="#5-记忆化搜索" class="headerlink" title="5.记忆化搜索"></a>5.记忆化搜索</h2><ol>
+<li><p>所谓的记忆化搜索重点就在于对中间结果的记录，使得后续可以直接利用</p>
+</li>
+<li><p>注意点</p>
+</li>
+</ol>
+<ul>
+<li>递归函数的出参(返回值)和入参(每轮的形参)</li>
+<li>递归函数的出口(有效情况即完成事件，无效情况即终止事件)</li>
+<li>最小单元处理逻辑(如何进入到下一轮)</li>
+</ul>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;Leetcode 1575.统计所有可行路径
+class Solution &#123;
+public:
+    vector&lt;vector&lt;int&gt;&gt; cnt;
+    const int mod &#x3D; 1000000007;
+
+    int dfs(vector&lt;int&gt;&amp; locations, int now, int finish, int fuelnow)&#123;
+        &#x2F;&#x2F;已经处理过的不再重复处理
+        if(cnt[now][fuelnow]!&#x3D;-1)&#123;
+            return cnt[now][fuelnow];
+        &#125;
+        int n &#x3D; locations.size();
+        &#x2F;&#x2F;油耗尽且未到达终点
+        if(fuelnow&#x3D;&#x3D;0 &amp;&amp; now!&#x3D;finish)&#123;
+            cnt[now][fuelnow] &#x3D; 0;
+            return 0;
+        &#125;
+        &#x2F;&#x2F;油未耗尽但无法继续前进
+        bool hasNext &#x3D; false;
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            if(i!&#x3D;now)&#123;
+                int cost &#x3D; abs(locations[i]-locations[now]);
+                if(fuelnow &gt;&#x3D; cost)&#123;
+                    hasNext &#x3D; true;
+                    break;
+                &#125;
+            &#125;
+        &#125;
+        if(fuelnow &amp;&amp; !hasNext)&#123;
+            int temp &#x3D; cnt[now][fuelnow] &#x3D; now&#x3D;&#x3D;finish?1:0;
+            return temp;
+        &#125;
+
+        &#x2F;&#x2F;如何进入下一轮，并且进行累加
+        int sum &#x3D; now&#x3D;&#x3D;finish?1:0;
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            if(i!&#x3D;now)&#123;
+                int cost &#x3D; abs(locations[i]-locations[now]);
+                if(fuelnow &gt;&#x3D; cost)&#123;
+                    sum +&#x3D; dfs(locations, i, finish, fuelnow-cost);
+                    sum %&#x3D; mod;
+                &#125;
+            &#125;
+        &#125;
+        cnt[now][fuelnow] &#x3D; sum;
+        &#x2F;&#x2F;返回路径数量和
+        return sum;
+    &#125;
+
+    int countRoutes(vector&lt;int&gt;&amp; locations, int start, int finish, int fuel) &#123;
+        &#x2F;&#x2F;dfs
+        int n &#x3D; locations.size();
+        cnt.resize(n, vector&lt;int&gt;(fuel+1, -1));
+
+        return dfs(locations, start, finish, fuel);
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;Leetcode 403.青蛙过河
+class Solution &#123;
+public:
+    unordered_map&lt;int,bool&gt; book;
+    unordered_map&lt;int,int&gt; mp;
+    vector&lt;int&gt; dir&#123;-1,0,1&#125;;
+    bool dfs(vector&lt;int&gt;&amp; stones, int k, int index)&#123;
+        int n &#x3D; stones.size();
+        &#x2F;&#x2F;相当于将原本需要两个int维度表示的东西合并成一个维度，
+        &#x2F;&#x2F;因此二维数组book可以直接使用哈希表代替
+        &#x2F;&#x2F;原本-1代表false,1代表true，0代表未计算
+        &#x2F;&#x2F;现在不存在即未计算
+        int key &#x3D; index*10000+k;
+        if(book.count(key)) return book[key];
+        if(index&#x3D;&#x3D;n-1)&#123;
+            return true;
+        &#125;
+        for(int i &#x3D; 0; i &lt; 3; ++i)&#123;
+            int newk &#x3D; k + dir[i];
+            if(newk&lt;&#x3D;0) continue;
+            if(mp.count(stones[index]+newk))&#123;
+                bool flag &#x3D; dfs(stones, newk, mp[stones[index]+newk]);
+                book[key] &#x3D; flag;
+                if(flag) return true;
+            &#125;
+        &#125;
+        book[key] &#x3D; false;
+        return false;
+    &#125;
+
+    bool canCross(vector&lt;int&gt;&amp; stones) &#123;
+        int n &#x3D; stones.size();
+        if(stones[1]!&#x3D;1) return false;
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            mp[stones[i]] &#x3D; i;
+        &#125;
+        return dfs(stones,1,1);;
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;Leetcode 494.目标和
+class Solution &#123;
+public:
+    &#x2F;*
+    &#x2F;&#x2F;存在负权值也可以使用哈希表规避
+    unordered_map&lt;int,int&gt; mp;
+    int dfs(vector&lt;int&gt;&amp; nums, int target, int now, int index)&#123;
+        int key &#x3D; now*100+index;
+        if(mp.count(key)) return mp[key];
+        if(index&#x3D;&#x3D;nums.size())&#123;
+            mp[key] &#x3D; now&#x3D;&#x3D;target ? 1 : 0;
+            return mp[key];
+        &#125;
+        int plus &#x3D; dfs(nums, target, now+nums[index], index+1);
+        int dec &#x3D; dfs(nums, target, now-nums[index], index+1);
+        mp[key] &#x3D; plus+dec;
+        return mp[key];
+    &#125;
+
+    int findTargetSumWays(vector&lt;int&gt;&amp; nums, int target) &#123;
+        &#x2F;&#x2F;dp[i][j]以i为结尾，结果为j的方案数
+        return dfs(nums, target, 0, 0);
+    &#125;
+    *&#x2F;
+    
+    &#x2F;&#x2F;转动态规划
+    int findTargetSumWays(vector&lt;int&gt;&amp; nums, int target) &#123;
+        &#x2F;&#x2F;dp[i][j] &#x3D; dp[i-1][j+nums[i-1]] + dp[i-1][j-nums[i-1]];
+        int n &#x3D; nums.size();
+        int sum &#x3D; 0;
+        for(int i &#x3D; 0; i &lt; n; ++i)&#123;
+            sum +&#x3D; abs(nums[i]);
+        &#125;
+        if(sum &lt; abs(target)) return 0;
+        vector&lt;vector&lt;int&gt;&gt; dp(n+1, vector&lt;int&gt;(2*sum+1));
+
+        dp[0][sum] &#x3D; 1;
+        for(int i &#x3D; 1; i &lt;&#x3D; n; ++i)&#123;
+            int x&#x3D; nums[i-1];
+            for(int j &#x3D; -sum; j &lt;&#x3D; sum; ++j)&#123;
+                if(j-x+sum&gt;&#x3D;0) dp[i][j+sum] +&#x3D; dp[i-1][j-x+sum];
+                if(j+x+sum&lt;&#x3D;2*sum) dp[i][j+sum] +&#x3D; dp[i-1][j+x+sum];
+            &#125;
+        &#125;
+        return dp[n][target+sum];
+    &#125;
+&#125;;
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6.总结"></a>6.总结</h2><ol>
+<li>熟悉的题使用以往经验直接猜测状态定义，然后梳理出状态转移方程</li>
+<li>所有dp题都可以先考虑记忆化搜索的方法，然后根据记忆化搜索的函数形参来确定dp数组的状态定义</li>
+</ol>
+<h2 id="7-练习"><a href="#7-练习" class="headerlink" title="7.练习"></a>7.练习</h2><ol>
+<li>二维矩阵，只能往右和往下走奇数步，求最终方案数</li>
+</ol>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include &lt;bits&#x2F;stdc++.h&gt;
+
+using namespace std;
+
+int dp[2003][2003];
+int row[2][2003];
+int col[2003][2];
+
+int main()
+&#123;
+    int T,n,m;
+    cin &gt;&gt; T;
+    while(T--)&#123;
+        cin &gt;&gt; n &gt;&gt; m;
+        memset(dp, 0, sizeof(dp));
+        memset(row, 0, sizeof(row));
+        memset(col, 0, sizeof(col));
+        dp[1][1] &#x3D; 1;
+        row[1][1] &#x3D; 1;
+        col[1][1] &#x3D; 1;
+        for(int i &#x3D; 2; i &lt;&#x3D; n; ++i)&#123;
+            dp[i][1] &#x3D; row[(i-1)&amp;1][1];
+            row[i&amp;1][1] +&#x3D; dp[i][1];
+            col[i][1] +&#x3D; dp[i][1];
+            &#x2F;&#x2F;cout &lt;&lt; i &lt;&lt; &quot; &quot; &lt;&lt; row[i&amp;1][1] &lt;&lt; endl;
+        &#125;
+        for(int i &#x3D; 2; i &lt;&#x3D; m; ++i)&#123;
+            dp[1][i] &#x3D; col[1][(i-1)&amp;1];
+            col[1][i&amp;1] +&#x3D; dp[1][i];
+            row[1][i] +&#x3D; dp[1][i];
+            &#x2F;&#x2F;cout &lt;&lt; i &lt;&lt; &quot; &quot; &lt;&lt; col[1][i&amp;1] &lt;&lt; endl;
+        &#125;
+        &#x2F;*
+        for(int i &#x3D; 1; i &lt;&#x3D; n; ++i)&#123;
+            for(int j &#x3D; 1; j &lt;&#x3D; m; ++j)&#123;
+                cout &lt;&lt; dp[i][j] &lt;&lt; &quot; &quot;;
+            &#125;
+            cout &lt;&lt; endl;
+        &#125;
+
+        for(int i &#x3D; 0; i &lt;&#x3D; 1; ++i)&#123;
+            for(int j &#x3D; 1; j &lt;&#x3D; m; ++j)&#123;
+                cout &lt;&lt; row[i][j] &lt;&lt; &quot; &quot;;
+            &#125;
+            cout &lt;&lt; endl;
+        &#125;
+
+        for(int i &#x3D; 1; i &lt;&#x3D; n; ++i)&#123;
+            for(int j &#x3D; 0; j &lt;&#x3D; 1; ++j)&#123;
+                cout &lt;&lt; col[i][j] &lt;&lt; &quot; &quot;;
+            &#125;
+            cout &lt;&lt; endl;
+        &#125;
+*&#x2F;
+        for(int i &#x3D; 2; i &lt;&#x3D; n; ++i)&#123;
+            for(int j &#x3D; 2; j &lt;&#x3D; m; ++j)&#123;
+                dp[i][j] &#x3D; row[(i-1)&amp;1][j] + col[i][(j-1)&amp;1];
+                &#x2F;&#x2F;cout &lt;&lt; dp[i][j] &lt;&lt; endl;
+                row[i&amp;1][j] +&#x3D; dp[i][j];
+                col[i][j&amp;1] +&#x3D; dp[i][j];
+            &#125;
+        &#125;
+
+        for(int i &#x3D; 1; i &lt;&#x3D; n; ++i)&#123;
+            for(int j &#x3D; 1; j &lt;&#x3D; m; ++j)&#123;
+                cout &lt;&lt; dp[i][j] &lt;&lt; &quot; &quot;;
+            &#125;
+            cout &lt;&lt; endl;
+        &#125;
+
+    &#125;
+    return 0;
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Tomoyo</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://106.15.89.36/2023/03/02/dong-tai-gui-hua-zhi-lu-jing-wen-ti/">http://106.15.89.36/2023/03/02/dong-tai-gui-hua-zhi-lu-jing-wen-ti/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Tomoyo</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                                    <span class="chip bg-color">动态规划</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2023/03/02/dong-tai-gui-hua-zhi-lu-jing-wen-ti/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="动态规划之路径问题">
+                        
+                        <span class="card-title">动态规划之路径问题</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-02
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/03/02/er-fen-sou-suo/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="二分搜索">
+                        
+                        <span class="card-title">二分搜索</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-02
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="7699212978"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <a href="/about" target="_blank">Tomoyo</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/tomoyoooo" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:Tomoyo0o@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+            }
+        </script>
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+    
+    <script type="text/javascript" size="150" alpha='0.6'
+        zIndex="-1" src="/libs/background/ribbon-refresh.min.js" async="async"></script>
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
