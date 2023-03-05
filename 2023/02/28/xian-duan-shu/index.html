@@ -430,7 +430,7 @@ n个节点，树的最大深度为log2(n-1)往下取整后+2
 <li>线段树所需空间：将n向上扩充到最近的2的某个次方，再*2(简单一点就直接4*n的大小)</li>
 <li>线段树是一个完全二叉树，比如给定一个数组[1,5,3,7,3,2,5,7],对应的最小值线段树如下图：</li>
 </ol>
-<p><img src="/./source/_post/images/%E6%9C%80%E5%B0%8F%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%A4%BA%E4%BE%8B.png" alt="最小值线段树"><br><img src="/./source/_post/images/%E6%9C%80%E5%B0%8F%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AF%B9%E5%BA%94%E5%8C%BA%E9%97%B4.png" alt="对应区间"><br><img src="/./source/_post/images/%E6%9C%80%E5%B0%8F%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%95%B0%E7%BB%84%E6%83%85%E5%86%B5.png" alt="数组情况"></p>
+<p><img src="/2023/02/28/xian-duan-shu/%E6%9C%80%E5%B0%8F%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%A4%BA%E4%BE%8B.png" alt="最小值线段树"><br><img src="/2023/02/28/xian-duan-shu/%E6%9C%80%E5%B0%8F%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%AF%B9%E5%BA%94%E5%8C%BA%E9%97%B4.png" alt="对应区间"><br><img src="/2023/02/28/xian-duan-shu/%E6%9C%80%E5%B0%8F%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%95%B0%E7%BB%84%E6%83%85%E5%86%B5.png" alt="数组情况"></p>
 <h2 id="定义与建树"><a href="#定义与建树" class="headerlink" title="定义与建树"></a>定义与建树</h2><pre class="line-numbers language-none"><code class="language-none">#define maxn 10007;
 int Sum[maxn&lt;&lt;2]; &#x2F;&#x2F;4倍空间
 int Add[max&lt;&lt;2]; &#x2F;&#x2F;懒惰标记
