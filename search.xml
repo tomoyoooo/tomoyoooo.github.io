@@ -443,10 +443,16 @@
         <content type="html"><![CDATA[<h1 id="质数筛"><a href="#质数筛" class="headerlink" title="质数筛"></a>质数筛</h1><h2 id="埃氏筛"><a href="#埃氏筛" class="headerlink" title="埃氏筛"></a>埃氏筛</h2><ol><li>时间复杂度O(n loglogn)</li><li>思路：将每个质数的倍数标记为合数<pre class="line-numbers language-none"><code class="language-none">int visit[maxn];  void Prime()&#123;    mem(visit,0);           &#x2F;&#x2F;初始化都是素数    visit[0] &#x3D; visit[1] &#x3D; 1;  &#x2F;&#x2F;0 和 1不是素数    for (int i &#x3D; 2; i &lt;&#x3D; maxn; i++) &#123;        if (!visit[i]) &#123;         &#x2F;&#x2F;如果i是素数，让i的所有倍数都不是素数            for (int j &#x3D; i*i; j &lt;&#x3D; maxn; j +&#x3D; i) &#123;                 visit[j] &#x3D; 1;            &#125;        &#125;    &#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li></ol><h2 id="欧拉筛"><a href="#欧拉筛" class="headerlink" title="欧拉筛"></a>欧拉筛</h2><ol><li>时间复杂度：O(n)</li><li>思路：在埃氏筛的基础上，让每个合数只被它的最小质因数筛选依次，从而不会出现埃氏筛中的重复情况</li></ol><pre class="line-numbers language-none"><code class="language-none">int prime[maxn];int visit[maxn];void Prime()&#123;    mem(visit,0);    mem(prime, 0);    for (int i &#x3D; 2;i &lt;&#x3D; maxn; i++) &#123;        cout&lt;&lt;&quot; i &#x3D; &quot;&lt;&lt;i&lt;&lt;endl;        if (!visit[i]) &#123;            prime[++prime[0]] &#x3D; i;      &#x2F;&#x2F;记录素数， 这个prime[0] 相当于 cnt，用来计数        &#125;        for (int j &#x3D; 1; j &lt;&#x3D;prime[0] &amp;&amp; i*prime[j] &lt;&#x3D; maxn; j++) &#123;&#x2F;&#x2F;            cout&lt;&lt;&quot;  j &#x3D; &quot;&lt;&lt;j&lt;&lt;&quot; prime[&quot;&lt;&lt;j&lt;&lt;&quot;]&quot;&lt;&lt;&quot; &#x3D; &quot;&lt;&lt;prime[j]&lt;&lt;&quot; i*prime[j] &#x3D; &quot;&lt;&lt;i*prime[j]&lt;&lt;endl;            visit[i*prime[j]] &#x3D; 1;            &#x2F;&#x2F;最重要的一步，保证了使用的都是最小质因数            if (i % prime[j] &#x3D;&#x3D; 0) &#123;                break;            &#125;        &#125;    &#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
       
       
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
       
         <tags>
             
-            <tag> 零散算法技巧 </tag>
+            <tag> 算法 </tag>
             
         </tags>
       
@@ -498,8 +504,6 @@
             
             <tag> Blog </tag>
             
-            <tag> CentOS </tag>
-            
         </tags>
       
     </entry>
@@ -524,8 +528,6 @@
         <tags>
             
             <tag> Blog </tag>
-            
-            <tag> CentOS </tag>
             
         </tags>
       
