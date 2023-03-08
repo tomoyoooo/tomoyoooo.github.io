@@ -592,58 +592,58 @@ dis[i]表示从源点s到顶点i的路径长度，初始化为无穷
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="c-模板"><a href="#c-模板" class="headerlink" title="c++模板"></a>c++模板</h2><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">&#x2F;&#x2F;c++模板
-#include &lt;iostream&gt;
-#define INF 99999999
-using namespace std;
+<h2 id="c-模板"><a href="#c-模板" class="headerlink" title="c++模板"></a>c++模板</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//c++模板</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">INF</span> <span class="token expression"><span class="token number">99999999</span></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-int main()
-&#123;
-	int dis[10], bak[10], i, k, n, m, u[10], v[10], w[10], check, flag;
-	ifstream readFile(&quot;negative_weight.txt&quot;);
-	readFile &gt;&gt; n &gt;&gt; m;
-	for (i &#x3D; 1; i &lt;&#x3D; m; i++) &#123;
-		readFile &gt;&gt; u[i] &gt;&gt; v[i] &gt;&gt; w[i];
-	&#125;
-	&#x2F;&#x2F;初始化dis数组，代表源点到其他顶点的初始路程
-	for (i &#x3D; 1; i &lt;&#x3D; n; i++) &#123;
-		dis[i] &#x3D; INF;
-	&#125;
-	dis[1] &#x3D; 0; &#x2F;&#x2F;一开始只有源点是可知的，其余的顶点都是未知
-	&#x2F;&#x2F;Bellman-Ford算法核心代码
-	for (k &#x3D; 1; k &lt;&#x3D; n - 1; k++) &#123;&#x2F;&#x2F;最多对所有边执行n-1次松弛操作
-		&#x2F;&#x2F;将dis数组备份至bak数组
-		for (i &#x3D; 1; i &lt;&#x3D; n; i++) &#123;
-			bak[i] &#x3D; dis[i];
-		&#125;
-		for (i &#x3D; 1; i &lt;&#x3D; m; i++) &#123;&#x2F;&#x2F;对每条边执行松弛
-			if (dis[v[i]] &gt; dis[u[i]] + w[i])
-				dis[v[i]] &#x3D; dis[u[i]] + w[i];
-		&#125;
-		&#x2F;&#x2F;松弛完成后检测dis数组是否有更新
-		check &#x3D; 0;
-		for (i &#x3D; 1; i &lt;&#x3D; n; i++) &#123;
-			if (dis[i] !&#x3D; bak[i]) check &#x3D; 1;
-		&#125;
-		if (check &#x3D;&#x3D; 0) break;&#x2F;&#x2F;如果数组不再更新就退出多余循环
-	&#125;
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> dis<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> bak<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> k<span class="token punctuation">,</span> n<span class="token punctuation">,</span> m<span class="token punctuation">,</span> u<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> v<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> w<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> check<span class="token punctuation">,</span> flag<span class="token punctuation">;</span>
+	ifstream <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">"negative_weight.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	readFile <span class="token operator">>></span> n <span class="token operator">>></span> m<span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		readFile <span class="token operator">>></span> u<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">>></span> v<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">>></span> w<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">//初始化dis数组，代表源点到其他顶点的初始路程</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		dis<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> INF<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	dis<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">//一开始只有源点是可知的，其余的顶点都是未知</span>
+	<span class="token comment">//Bellman-Ford算法核心代码</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>k <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> k <span class="token operator">&lt;=</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> k<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token comment">//最多对所有边执行n-1次松弛操作</span>
+		<span class="token comment">//将dis数组备份至bak数组</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			bak<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> dis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token comment">//对每条边执行松弛</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>dis<span class="token punctuation">[</span>v<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">></span> dis<span class="token punctuation">[</span>u<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> w<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+				dis<span class="token punctuation">[</span>v<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> dis<span class="token punctuation">[</span>u<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> w<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token comment">//松弛完成后检测dis数组是否有更新</span>
+		check <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>dis<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> bak<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> check <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>check <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//如果数组不再更新就退出多余循环</span>
+	<span class="token punctuation">&#125;</span>
 
-	&#x2F;&#x2F;检测是否有负权值回路,回路，回路
-	flag &#x3D; 0;
-	for (i &#x3D; 1; i &lt;&#x3D; m; i++) &#123;
-		if (dis[v[i]] &gt; dis[u[i]] + w[i]) flag &#x3D; 1; &#x2F;&#x2F; 如果还能继续松弛，代表有负权值回路
-	&#125;
-	if (flag &#x3D;&#x3D; 1)
-		cout &lt;&lt; &quot;存在负权值回路\n&quot;;
-	for (i &#x3D; 1; i &lt;&#x3D; n; i++) &#123;
-		cout.width(3);
-		cout &lt;&lt; dis[i];
-	&#125;
-	cout &lt;&lt; endl;
-	readFile.close();
-	system(&quot;pause&quot;);
-	return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token comment">//检测是否有负权值回路,回路，回路</span>
+	flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>dis<span class="token punctuation">[</span>v<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">></span> dis<span class="token punctuation">[</span>u<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> w<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// 如果还能继续松弛，代表有负权值回路</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>flag <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+		cout <span class="token operator">&lt;&lt;</span> <span class="token string">"存在负权值回路\n"</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		cout<span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cout <span class="token operator">&lt;&lt;</span> dis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	readFile<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">system</span><span class="token punctuation">(</span><span class="token string">"pause"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>

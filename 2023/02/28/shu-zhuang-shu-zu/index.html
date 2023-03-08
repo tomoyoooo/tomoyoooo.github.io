@@ -530,51 +530,51 @@ lowb">
 <li>比如[l,r]范围同时加1，delta[l]+&#x3D;1，delta[r+1]-&#x3D;1</li>
 <li>公式:sum[1,i] &#x3D; tree[i] + (i+1)*delta[i] - delta[i]*i</li>
 </ul>
-<h2 id="leetcode-307-区域和检索-数组可修改"><a href="#leetcode-307-区域和检索-数组可修改" class="headerlink" title="leetcode 307.区域和检索-数组可修改"></a>leetcode 307.区域和检索-数组可修改</h2><pre class="line-numbers language-none"><code class="language-none">class NumArray &#123;
-public:
-    vector&lt;int&gt; tree;
+<h2 id="leetcode-307-区域和检索-数组可修改"><a href="#leetcode-307-区域和检索-数组可修改" class="headerlink" title="leetcode 307.区域和检索-数组可修改"></a>leetcode 307.区域和检索-数组可修改</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">NumArray</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> tree<span class="token punctuation">;</span>
 
-    int lowbit(int x) &#123;
-        return x &amp; -x;
-    &#125;
+    <span class="token keyword">int</span> <span class="token function">lowbit</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> x <span class="token operator">&amp;</span> <span class="token operator">-</span>x<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
     
-    int query(int x) &#123;
-        int ans &#x3D; 0;
-        &#x2F;&#x2F;找[1,x]的和
-        for(int i &#x3D; x; i &gt; 0; i -&#x3D; lowbit(i))
-            ans +&#x3D; tree[i];
-        return ans;
-    &#125;
+    <span class="token keyword">int</span> <span class="token function">query</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment">//找[1,x]的和</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> x<span class="token punctuation">;</span> i <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">-=</span> <span class="token function">lowbit</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            ans <span class="token operator">+=</span> tree<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    void add(int x, int u) &#123;
-        &#x2F;&#x2F;所有x节点影响的父节点
-        for(int i &#x3D; x; i &lt;&#x3D; n; i +&#x3D; lowbit(i))
-            tree[i] +&#x3D; u;
-    &#125;
+    <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> u<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//所有x节点影响的父节点</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> x<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i <span class="token operator">+=</span> <span class="token function">lowbit</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            tree<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+=</span> u<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    vector&lt;int&gt; nums;
-    int n;
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> nums<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> n<span class="token punctuation">;</span>
 
-    NumArray(vector&lt;int&gt;&amp; nums) &#123;
-        this-&gt;nums &#x3D; nums;
-        n &#x3D; nums.size();
-        tree.resize(n+1, 0);
-        for(int i &#x3D; 0; i &lt; n; i++)
-            add(i+1, nums[i]);
-    &#125;
+    <span class="token function">NumArray</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token operator">-></span>nums <span class="token operator">=</span> nums<span class="token punctuation">;</span>
+        n <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tree<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token function">add</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
     
-    void update(int index, int val) &#123;
-        &#x2F;&#x2F;更新差值
-        add(index+1, val-nums[index]);
-        nums[index] &#x3D; val;
-    &#125;
+    <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//更新差值</span>
+        <span class="token function">add</span><span class="token punctuation">(</span>index<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> val<span class="token operator">-</span>nums<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        nums<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> val<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
     
-    int sumRange(int left, int right) &#123;
-        &#x2F;&#x2F;[left,right] &#x3D; [1, right+1] - [1, left]
-        return query(right+1) - query(left);
-    &#125;
+    <span class="token keyword">int</span> <span class="token function">sumRange</span><span class="token punctuation">(</span><span class="token keyword">int</span> left<span class="token punctuation">,</span> <span class="token keyword">int</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//[left,right] = [1, right+1] - [1, left]</span>
+        <span class="token keyword">return</span> <span class="token function">query</span><span class="token punctuation">(</span>right<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">query</span><span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>

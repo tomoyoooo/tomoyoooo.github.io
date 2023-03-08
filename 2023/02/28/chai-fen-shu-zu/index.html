@@ -494,44 +494,44 @@
 <li>修改区间值时，只需要修改**(修改区间内左边第一个点) <strong>和</strong>(修改区间外右边第一个点)**两个端点的差分数组的值</li>
 <li>查询原数组arr现在的某个值时，需要遍历使用差分数组和原数组结合计算才能查询到</li>
 </ol>
-<h2 id="Leetcode-798-得分最高的最小轮调"><a href="#Leetcode-798-得分最高的最小轮调" class="headerlink" title="Leetcode 798.得分最高的最小轮调"></a>Leetcode 798.得分最高的最小轮调</h2><pre class="line-numbers language-none"><code class="language-none">class Solution &#123;
-public:
-    int bestRotation(vector&lt;int&gt;&amp; nums) &#123;
-        int n &#x3D; nums.size();
-        vector&lt;int&gt; diff &#x3D; vector&lt;int&gt;(n, 0);
-        int r1, r2;
-        for(int i &#x3D; 0; i&lt;n; i++) &#123;
-            r1 &#x3D; min(i, i - nums[i]);
-            if(r1 &gt;&#x3D; 0) &#123; &#x2F;&#x2F; [0, min(i, i-nums[i])]
-                diff[0]++;
-                if(r1 &lt; n-1) &#123;
-                    diff[r1 + 1]--;
-                &#125;
-            &#125;
-            r2 &#x3D; min(n - 1, n + i - nums[i]);
-            if(r2 &lt; n &amp;&amp; r2 &gt; i) &#123;
-                diff[i+1]++;
-                if(r2 &lt; n-1) &#123;
-                    diff[r2 + 1]--;
-                &#125;
-            &#125;
-            &#x2F;&#x2F; cout &lt;&lt; r1 &lt;&lt; &quot; &quot; &lt;&lt; r2 &lt;&lt; endl;
-        &#125;
+<h2 id="Leetcode-798-得分最高的最小轮调"><a href="#Leetcode-798-得分最高的最小轮调" class="headerlink" title="Leetcode 798.得分最高的最小轮调"></a>Leetcode 798.得分最高的最小轮调</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> <span class="token function">bestRotation</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> diff <span class="token operator">=</span> <span class="token generic-function"><span class="token function">vector</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span></span></span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> r1<span class="token punctuation">,</span> r2<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            r1 <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> i <span class="token operator">-</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>r1 <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// [0, min(i, i-nums[i])]</span>
+                diff<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>r1 <span class="token operator">&lt;</span> n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    diff<span class="token punctuation">[</span>r1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">--</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+            r2 <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> n <span class="token operator">+</span> i <span class="token operator">-</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>r2 <span class="token operator">&lt;</span> n <span class="token operator">&amp;&amp;</span> r2 <span class="token operator">></span> i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                diff<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>r2 <span class="token operator">&lt;</span> n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    diff<span class="token punctuation">[</span>r2 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">--</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token comment">// cout &lt;&lt; r1 &lt;&lt; " " &lt;&lt; r2 &lt;&lt; endl;</span>
+        <span class="token punctuation">&#125;</span>
         
 
-        int ans &#x3D; 0;
-        int maxScore &#x3D; 0;
-        int acc &#x3D; 0;
-        for(int i &#x3D; 0; i &lt; n; i++) &#123;
-            acc +&#x3D; diff[i];
-            if(acc &gt; maxScore) &#123;
-                maxScore &#x3D; acc;
-                ans &#x3D; i;
-            &#125;
-        &#125;
-        return ans;
-    &#125;
-&#125;;
+        <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> maxScore <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> acc <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            acc <span class="token operator">+=</span> diff<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>acc <span class="token operator">></span> maxScore<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                maxScore <span class="token operator">=</span> acc<span class="token punctuation">;</span>
+                ans <span class="token operator">=</span> i<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
