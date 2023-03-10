@@ -4,19 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="区间操作总结, Tomoyo">
-    <meta name="description" content="区间求和总结
-数组不变，区间查询：前缀和、树状数组、线段树
+    <meta name="keywords" content="KMP算法, Tomoyo">
+    <meta name="description" content="KMP算法
+KMP是一个线性时间复杂度O(M+N)的字符串匹配算法，相比于朴素的暴力匹配算法O(M×N)要好很多，因为主字符串的指针不需要往后走
 
-数组单点修改，区间查询：树状数组、线段树
+KMP本质：用next数组记录下了匹配串最长的相同前后缀信息
 
-数组区间修改，单点查询：差分数组、线段树
-
-数组区间修改，区间查询：线段树、树状数组
-
-
-注意事项
-线段树尽量在第四种情况再考虑，因为">
+举例：原字符串”ababab">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,7 +24,7 @@
 
     
 
-    <title>区间操作总结 | Tomoyo</title>
+    <title>KMP算法 | Tomoyo</title>
     <link rel="icon" type="image/jpeg" href="/favicon.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -320,12 +314,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">区间操作总结</h1>
+                    <h1 class="description center-align post-title">KMP算法</h1>
                 </div>
             </div>
         </div>
@@ -441,14 +435,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%8C%BA%E9%97%B4%E6%93%8D%E4%BD%9C/">
-                                <span class="chip bg-color">区间操作</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D/">
+                                <span class="chip bg-color">字符串匹配</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -457,7 +464,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-02-28
+                    2023-03-10
                 </div>
                 
 
@@ -481,25 +488,91 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="区间求和总结"><a href="#区间求和总结" class="headerlink" title="区间求和总结"></a>区间求和总结</h1><ol>
-<li><p>数组不变，区间查询：前缀和、树状数组、线段树</p>
+                <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><ol>
+<li><p>KMP是一个线性时间复杂度O(M+N)的字符串匹配算法，相比于朴素的暴力匹配算法O(M×N)要好很多，因为<em><strong>主字符串的指针不需要往后走</strong></em></p>
 </li>
-<li><p>数组单点修改，区间查询：树状数组、线段树</p>
+<li><p>KMP本质：用next数组记录下了匹配串最长的相同前后缀信息</p>
 </li>
-<li><p>数组区间修改，单点查询：差分数组、线段树</p>
+<li><p>举例：原字符串”abababcaa”，匹配字符串”ababc”</p>
+<pre class="line-numbers language-none"><code class="language-none">ababc
+(1)对于匹配串起始位置为0的每一个子串，都需要去找到它的最长相同前后缀
+ababc对应的子串为：a、ab、aba、abab、ababc
+首先a的情况下，前缀和后缀必有一个为空，所以结果为0
+其次ab的情况下，a和b不等，结果为0
+接着是aba，此时a和a相等，结果为1
+然后是abab，此时前缀和后缀可以形成ab和ab的情况，所以结果为2
+最后是ababc，此时没有前后缀可以相同，结果为0
+最终next数组就为[0,0,1,2,0]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">abababcaa
+    ↑
+ababc
+(2)我们可以发现最开始abab四个字符相同，但第五个位置不同了，此时我们可以根据next数组的信息，找到不匹配字符(主串现在的a)前面最长的匹配串
+next[3]&#x3D;2 -&gt; 所以我们让匹配串回退两步即可
+
+abababcaa
+    ↑
+  ababc
+(3)此时比较位还是主串的第五位，前面第三和第四位的ab则不用再进行比较了。因为我们通过next数组知道了匹配串的abab子串中，我们可以从第四位的b(对应后缀ab)往前退两步得到同样的前缀ab，既然主串和匹配串都能匹配到第四位了，说明主串内也是一样的情况。即
+ab  ababc  aa
+    ↑↑
+    ababc
+这两位必定是相同的，只需要从匹配串的第三位开始匹配<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>数组区间修改，区间查询：线段树、树状数组</p>
-</li>
+<li><p>代码实现</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">buildNext</span><span class="token punctuation">(</span><span class="token class-name">String</span> patt<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> patt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> next <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">//next数组当前指针位置</span>
+    <span class="token keyword">int</span> nextidx <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token comment">//当前相同前后缀长度</span>
+    <span class="token keyword">int</span> prefix_len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> idx <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>idx <span class="token operator">&lt;</span> n<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token comment">//相同则计入next数组</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>patt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>prefix_len<span class="token punctuation">)</span><span class="token operator">==</span>patt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            prefix_len<span class="token operator">++</span><span class="token punctuation">;</span>
+            next<span class="token punctuation">[</span>nextidx<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> prefix_len<span class="token punctuation">;</span>
+            idx<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">//前后缀不能继续匹配的话</span>
+        <span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+            <span class="token comment">//此时没有相同前后缀，next数组赋值0并往后走</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>prefix_len<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                next<span class="token punctuation">[</span>nextidx<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                idx<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token comment">//找有没有短一点的相同前后缀，没有会重进while循环继续找，直至prefix_len为0进入上面的if情况</span>
+            <span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+                prefix_len <span class="token operator">=</span> next<span class="token punctuation">[</span>prefix_len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> next<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">strStr</span><span class="token punctuation">(</span><span class="token class-name">String</span> s<span class="token punctuation">,</span> <span class="token class-name">String</span> patt<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> next <span class="token operator">=</span> <span class="token function">buildNext</span><span class="token punctuation">(</span>patt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token comment">//匹配就都往前走一步</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token operator">==</span>patt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            i<span class="token operator">++</span><span class="token punctuation">;</span>
+            j<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">//匹配串找到匹配的前后缀并使用</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            j <span class="token operator">=</span> next<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">//此时匹配串找不到匹配的前后缀了，只能让主串往前走一步</span>
+        <span class="token keyword">else</span> i<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">==</span>patt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token operator">-</span>j<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//没有匹配的情况</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li>线段树尽量在第四种情况再考虑，因为代码长，常数大，实际表现不算好</li>
-<li>优先级</li>
-</ol>
-<ul>
-<li>简单求区间和： 前缀和</li>
-<li>多次将某个区间变成同一个数： 线段树</li>
-<li>其他情况： 树状数组</li>
-</ul>
 
                 
             </div>
@@ -526,7 +599,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://106.15.89.36/2023/02/28/qu-jian-cao-zuo-zong-jie/">http://106.15.89.36/2023/02/28/qu-jian-cao-zuo-zong-jie/</a>
+                    <a href="http://106.15.89.36/2023/03/10/kmp-suan-fa/">http://106.15.89.36/2023/03/10/kmp-suan-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -564,8 +637,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%8C%BA%E9%97%B4%E6%93%8D%E4%BD%9C/">
-                                    <span class="chip bg-color">区间操作</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D/">
+                                    <span class="chip bg-color">字符串匹配</span>
                                 </a>
                             
                         </div>
@@ -613,17 +690,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/03/02/er-fen-sou-suo/">
+                <a href="/2023/03/10/kmp-suan-fa/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="二分搜索">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="KMP算法">
                         
-                        <span class="card-title">二分搜索</span>
+                        <span class="card-title">KMP算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -633,9 +711,63 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-02
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D/">
+                        <span class="chip bg-color">字符串匹配</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/03/09/tuo-bu-pai-xu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="拓扑排序">
+                        
+                        <span class="card-title">拓扑排序</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -655,57 +787,8 @@
                         <span class="chip bg-color">算法</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2023/02/28/qian-zhui-he/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="前缀和">
-                        
-                        <span class="card-title">前缀和</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-28
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-category">
-                                    数据结构
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                        <span class="chip bg-color">数据结构</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%8C%BA%E9%97%B4%E6%93%8D%E4%BD%9C/">
-                        <span class="chip bg-color">区间操作</span>
+                    <a href="/tags/%E5%9B%BE%E8%AE%BA/">
+                        <span class="chip bg-color">图论</span>
                     </a>
                     
                 </div>
