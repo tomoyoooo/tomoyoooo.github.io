@@ -4,11 +4,15 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="手写LFU, Tomoyo">
-    <meta name="description" content="2、LFU策略：最不经常使用
-LFU是最不经常使用策略，需要记录各节点的使用频次，可以采用哈希表记录不同频次对应的双向链表
+    <meta name="keywords" content="快速幂, Tomoyo">
+    <meta name="description" content="快速幂参考
 
-利用双向队列保证了O(1)时间对前驱后驱节点的寻找和节点的时序，也就是能够O(1)时间进行插入和删除，利用哈希表保">
+时间复杂度O(log n)，有二分的思想
+
+原理：每个十进制数字都可以拆分为二进制数字的组合
+举例：n&amp;#x3D;9 -&amp;gt; n&amp;#x3D;4+4+1
+所以：5^9 &amp;#x3D; 5^4 * 5^4 * 5
+可以递推得到：">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -22,7 +26,7 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
 
     
 
-    <title>手写LFU | Tomoyo</title>
+    <title>快速幂 | Tomoyo</title>
     <link rel="icon" type="image/jpeg" href="/favicon.jpg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -312,12 +316,12 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">手写LFU</h1>
+                    <h1 class="description center-align post-title">快速幂</h1>
                 </div>
             </div>
         </div>
@@ -433,12 +437,8 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                                <span class="chip bg-color">数据结构</span>
-                            </a>
-                        
-                            <a href="/tags/%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/">
-                                <span class="chip bg-color">淘汰策略</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
                     </div>
@@ -449,8 +449,8 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-category">
-                                数据结构
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
                             </a>
                         
                     </div>
@@ -462,7 +462,7 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-03-15
+                    2023-03-18
                 </div>
                 
 
@@ -486,126 +486,154 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="2、LFU策略：最不经常使用"><a href="#2、LFU策略：最不经常使用" class="headerlink" title="2、LFU策略：最不经常使用"></a>2、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lfu-cache/">LFU策略</a>：最不经常使用</h1><ol>
-<li><p>LFU是最不经常使用策略，需要记录各节点的使用频次，可以采用哈希表记录不同频次对应的双向链表</p>
+                <h1 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/95902286">参考</a></p>
+<ol>
+<li><p>时间复杂度O(log n)，有二分的思想</p>
 </li>
-<li><p>利用双向队列保证了O(1)时间对前驱后驱节点的寻找和节点的时序，也就是能够O(1)时间进行插入和删除，利用哈希表保证了对单个节点O(1)时间的寻找</p>
+<li><p>原理：每个十进制数字都可以拆分为二进制数字的组合</p>
+<pre class="line-numbers language-none"><code class="language-none">举例：n&#x3D;9 -&gt; n&#x3D;4+4+1
+所以：5^9 &#x3D; 5^4 * 5^4 * 5
+可以递推得到： 5^9 &#x3D; (5^2*5^2) * (5^2*5^2) * 5
+可以递推得到： 5^9 &#x3D; (5*5*5*5) * (5*5*5*5) * 5
+此时其实只需要传递三项的值乘在一起就可以了，原来需要乘9次，现在快速幂只需要(log9)级别的次数，因为n每次都减小到原来的一半<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>哈希表的value部分为Node类型，节点需要同时存储key和value保证在删除节点时能够访问到哈希表对应值</p>
-</li>
-<li><p>java有哈希链表的对应实现：LinkedHashMap</p>
-<p><img src="/2023/03/15/shou-xie-lfu/%E5%93%88%E5%B8%8C%E9%93%BE%E8%A1%A8.jpg" alt="哈希链表"></p>
+<li><p>java对应实现代码在<a target="_blank" rel="noopener" href="https://github.com/tomoyoooo/Algorithm/blob/master/%E5%BF%AB%E9%80%9F%E5%B9%82.java">我的github算法仓库中</a></p>
 </li>
 </ol>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> key<span class="token punctuation">,</span>val<span class="token punctuation">,</span>freq<span class="token punctuation">;</span>
-    <span class="token class-name">Node</span> pre<span class="token punctuation">,</span>next<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> value<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>freq <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<h2 id="一、递归快速幂"><a href="#一、递归快速幂" class="headerlink" title="一、递归快速幂"></a>一、递归快速幂</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">qpow</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token function">qpow</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> a<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token comment">//用temp保存而不是直接qpow(a, n / 2)*qpow(a, n / 2)，这样才是O(log n)</span>
+        <span class="token keyword">int</span> temp <span class="token operator">=</span> <span class="token function">qpow</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> n <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> temp <span class="token operator">*</span> temp<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">DoubleLinkedList</span><span class="token punctuation">&#123;</span>
-    <span class="token class-name">Node</span> head<span class="token punctuation">,</span>tail<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token class-name">DoubleLinkedList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        tail <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        head<span class="token punctuation">.</span>next <span class="token operator">=</span> tail<span class="token punctuation">;</span>
-        tail<span class="token punctuation">.</span>pre <span class="token operator">=</span> head<span class="token punctuation">;</span>
+<span class="token comment">//大素数取模</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MOD</span> <span class="token expression"><span class="token number">1000000007</span></span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+ll <span class="token function">qpow</span><span class="token punctuation">(</span>ll a<span class="token punctuation">,</span> ll n<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token function">qpow</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> a <span class="token operator">%</span> MOD<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">&#123;</span>
+        ll temp <span class="token operator">=</span> <span class="token function">qpow</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> n <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">%</span> MOD<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> temp <span class="token operator">*</span> temp <span class="token operator">%</span> MOD<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span><span class="token class-name">Node</span> x<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        x<span class="token punctuation">.</span>pre<span class="token punctuation">.</span>next <span class="token operator">=</span> x<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        x<span class="token punctuation">.</span>next<span class="token punctuation">.</span>pre <span class="token operator">=</span> x<span class="token punctuation">.</span>pre<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="二、迭代快速幂"><a href="#二、迭代快速幂" class="headerlink" title="二、迭代快速幂"></a>二、迭代快速幂</h2><p><em><strong>递归会产生额外空间开销，占用大量栈空间</strong></em></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//非递归快速幂</span>
+<span class="token comment">//将幂拆分为多个2的次方，比如7拆为4，2，1</span>
+<span class="token keyword">int</span> <span class="token function">qpow</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span>        <span class="token comment">//如果n的当前末位为1</span>
+            ans <span class="token operator">*=</span> a<span class="token punctuation">;</span>  <span class="token comment">//ans乘上当前的a</span>
+        a <span class="token operator">*=</span> a<span class="token punctuation">;</span>        <span class="token comment">//a自乘</span>
+        n <span class="token operator">>>=</span> <span class="token number">1</span><span class="token punctuation">;</span>       <span class="token comment">//n往右移一位</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token class-name">Node</span> x<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        x<span class="token punctuation">.</span>pre <span class="token operator">=</span> tail<span class="token punctuation">.</span>pre<span class="token punctuation">;</span>
-        x<span class="token punctuation">.</span>pre<span class="token punctuation">.</span>next <span class="token operator">=</span> x<span class="token punctuation">;</span>
-        x<span class="token punctuation">.</span>next <span class="token operator">=</span> tail<span class="token punctuation">;</span>
-        tail<span class="token punctuation">.</span>pre <span class="token operator">=</span> x<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">LFUCache</span> <span class="token punctuation">&#123;</span>
-    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">Node</span><span class="token punctuation">></span></span> cache<span class="token punctuation">;</span>
-    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span> <span class="token class-name">DoubleLinkedList</span><span class="token punctuation">></span></span> freqMap<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> maxSize<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> size<span class="token punctuation">;</span>
-    <span class="token comment">//需要记录最小频次</span>
-    <span class="token keyword">int</span> minFreq<span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MOD</span> <span class="token expression"><span class="token number">1000000007</span></span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+ll <span class="token function">qpow</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    ll ans <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span> ans <span class="token operator">*=</span> a<span class="token punctuation">;</span>
+        ans <span class="token operator">=</span> ans <span class="token operator">%</span> MOD<span class="token punctuation">;</span>
+        a <span class="token operator">*=</span> a<span class="token punctuation">;</span>
+        a <span class="token operator">=</span> a <span class="token operator">%</span> MOD<span class="token punctuation">;</span>
+        n <span class="token operator">>>=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    <span class="token keyword">public</span> <span class="token class-name">LFUCache</span><span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cache <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>capacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        freqMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        maxSize <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
-        size <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        minFreq <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>cache<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token comment">//存在的话频次+1并放入链表末尾</span>
-        <span class="token class-name">Node</span> x <span class="token operator">=</span> cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">freqIncrement</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> x<span class="token punctuation">.</span>val<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token keyword">int</span> key<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>cache<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token class-name">Node</span> x <span class="token operator">=</span> cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            x<span class="token punctuation">.</span>val <span class="token operator">=</span> value<span class="token punctuation">;</span>
-            <span class="token function">freqIncrement</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">//容量满了，删除使用次数最少中，最久未使用的节点</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>maxSize <span class="token operator">==</span> size<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token function">removeMinFreqAndLeastRecently</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">//将新节点加入队列，并查看是否有freq为1的队列</span>
-        <span class="token class-name">Node</span> newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cache<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">DoubleLinkedList</span> list<span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>freqMap<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            list <span class="token operator">=</span> freqMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span><span class="token punctuation">&#123;</span>
-            list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DoubleLinkedList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            freqMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> list<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>newNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        size<span class="token operator">++</span><span class="token punctuation">;</span>
-        minFreq <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+<h2 id="三、矩阵快速幂模板"><a href="#三、矩阵快速幂模板" class="headerlink" title="三、矩阵快速幂模板"></a>三、矩阵快速幂模板</h2><ol>
+<li>矩阵快速幂：将快速幂用于矩阵计算中，经典应用就是求斐波那契数列</li>
+<li>矩阵快速幂模板</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//矩阵快速幂模板</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">freqIncrement</span><span class="token punctuation">(</span><span class="token class-name">Node</span> x<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> freq <span class="token operator">=</span> x<span class="token punctuation">.</span>freq<span class="token punctuation">;</span>
-        <span class="token class-name">DoubleLinkedList</span> list <span class="token operator">=</span> freqMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>freq<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//先去掉节点</span>
-        list<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">//如果对应频次队列为空了，则最小频次需要+1</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>minFreq<span class="token operator">==</span>freq <span class="token operator">&amp;&amp;</span> list<span class="token punctuation">.</span>tail<span class="token punctuation">.</span>pre<span class="token operator">==</span>list<span class="token punctuation">.</span>head<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            minFreq <span class="token operator">=</span> freq <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        x<span class="token punctuation">.</span>freq<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>freqMap<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>freq<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DoubleLinkedList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            freqMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>freq<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> list<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span><span class="token punctuation">&#123;</span>
-            list <span class="token operator">=</span> freqMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>freq<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//快速幂求出m*m方阵的q次方</span>
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">maxtrixQuickPow</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> m<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> res <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">//初始矩阵应该是一个单位矩阵</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        res<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-	
-    <span class="token comment">//删除频次最小队列中最久未使用的节点</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">removeMinFreqAndLeastRecently</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token class-name">DoubleLinkedList</span> list <span class="token operator">=</span> freqMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>minFreq<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cache<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>list<span class="token punctuation">.</span>head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        list<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>list<span class="token punctuation">.</span>head<span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        size<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>q<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            res <span class="token operator">=</span> <span class="token function">maxtrixMultiply</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> a<span class="token punctuation">,</span> m<span class="token punctuation">,</span> m<span class="token punctuation">,</span> m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        a <span class="token operator">=</span> <span class="token function">maxtrixMultiply</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> a<span class="token punctuation">,</span> m<span class="token punctuation">,</span> m<span class="token punctuation">,</span> m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        n <span class="token operator">>>=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//m*s矩阵与s*n矩阵相乘</span>
+<span class="token keyword">public</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">maxtrixMultiply</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> m<span class="token punctuation">,</span> <span class="token keyword">int</span> s<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> res <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> k <span class="token operator">&lt;</span> s<span class="token punctuation">;</span> <span class="token operator">++</span>k<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                res<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token operator">*</span>b<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdio></span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+<span class="token keyword">const</span> ll <span class="token number">1000000007</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">matrix</span>
+<span class="token punctuation">&#123;</span>
+    ll a1<span class="token punctuation">,</span> a2<span class="token punctuation">,</span> b1<span class="token punctuation">,</span> b2<span class="token punctuation">;</span>
+    <span class="token function">matrix</span><span class="token punctuation">(</span>ll a1<span class="token punctuation">,</span> ll a2<span class="token punctuation">,</span> ll b1<span class="token punctuation">,</span> ll b2<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">a1</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">a2</span><span class="token punctuation">(</span>a2<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">b1</span><span class="token punctuation">(</span>b1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">b2</span><span class="token punctuation">(</span>b2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">//重写乘法操作</span>
+    matrix <span class="token keyword">operator</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">const</span> matrix <span class="token operator">&amp;</span>y<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        matrix <span class="token function">ans</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a1 <span class="token operator">*</span> y<span class="token punctuation">.</span>a1 <span class="token operator">+</span> a2 <span class="token operator">*</span> y<span class="token punctuation">.</span>b1<span class="token punctuation">)</span> <span class="token operator">%</span> MOD<span class="token punctuation">,</span>
+                   <span class="token punctuation">(</span>a1 <span class="token operator">*</span> y<span class="token punctuation">.</span>a2 <span class="token operator">+</span> a2 <span class="token operator">*</span> y<span class="token punctuation">.</span>b2<span class="token punctuation">)</span> <span class="token operator">%</span> MOD<span class="token punctuation">,</span>
+                   <span class="token punctuation">(</span>b1 <span class="token operator">*</span> y<span class="token punctuation">.</span>a1 <span class="token operator">+</span> b2 <span class="token operator">*</span> y<span class="token punctuation">.</span>b1<span class="token punctuation">)</span> <span class="token operator">%</span> MOD<span class="token punctuation">,</span>
+                   <span class="token punctuation">(</span>b1 <span class="token operator">*</span> y<span class="token punctuation">.</span>a2 <span class="token operator">+</span> b2 <span class="token operator">*</span> y<span class="token punctuation">.</span>b2<span class="token punctuation">)</span> <span class="token operator">%</span> MOD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+matrix <span class="token function">qpow</span><span class="token punctuation">(</span>matrix a<span class="token punctuation">,</span> ll n<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    matrix <span class="token function">ans</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//单位矩阵</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            ans <span class="token operator">=</span> ans <span class="token operator">*</span> a<span class="token punctuation">;</span>
+        a <span class="token operator">=</span> a <span class="token operator">*</span> a<span class="token punctuation">;</span>
+        n <span class="token operator">>>=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    ll x<span class="token punctuation">;</span>
+    matrix <span class="token function">M</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%lld"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    matrix ans <span class="token operator">=</span> <span class="token function">qpow</span><span class="token punctuation">(</span>M<span class="token punctuation">,</span> x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%lld\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>ans<span class="token punctuation">.</span>a1 <span class="token operator">+</span> ans<span class="token punctuation">.</span>a2<span class="token punctuation">)</span> <span class="token operator">%</span> MOD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -632,7 +660,7 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://106.15.89.36/2023/03/15/shou-xie-lfu/">http://106.15.89.36/2023/03/15/shou-xie-lfu/</a>
+                    <a href="http://106.15.89.36/2023/03/18/kuai-su-mi/">http://106.15.89.36/2023/03/18/kuai-su-mi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -670,12 +698,8 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                                    <span class="chip bg-color">数据结构</span>
-                                </a>
-                            
-                                <a href="/tags/%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/">
-                                    <span class="chip bg-color">淘汰策略</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -723,9 +747,10 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2023/03/18/kuai-su-mi/">
                     <div class="card-image">
@@ -743,9 +768,9 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-18
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-18
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -758,6 +783,7 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -776,13 +802,13 @@ LFU是最不经常使用策略，需要记录各节点的使用频次，可以�
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/03/15/shou-xie-lru/">
+                <a href="/2023/03/15/shou-xie-lfu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="手写LRU">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="手写LFU">
                         
-                        <span class="card-title">手写LRU</span>
+                        <span class="card-title">手写LFU</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
