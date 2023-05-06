@@ -489,7 +489,7 @@
 <ol>
 <li>对应用上下文的理解：我的理解中应用上下文类似于<font color="red">抽象出了一个平台来管理原本的资源解析器和BeanFactory，并且提供一些预留的接口方便我们对BeanFactory和Bean做修改和扩展(前置后置处理)</font></li>
 </ol>
-<p><img src="/6.%E5%AE%9E%E7%8E%B0%E5%BA%94%E7%94%A8%E4%B8%8A%E4%B8%8B%E6%96%87.png"></p>
+<p><img src="/2023/05/06/shou-xie-spring-6-shi-xian-ying-yong-shang-xia-wen/6.%E5%AE%9E%E7%8E%B0%E5%BA%94%E7%94%A8%E4%B8%8A%E4%B8%8B%E6%96%87.png"></p>
 <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
 <li>实例化ClassPathXmlApplicationContext类，将配置文件传入</li>
 <li>调用顶级父类AbstractApplicationContext的refresh()模板方法：由子类AbstractRefreshableApplicationContext创建集成的工厂类，持有bean工厂后通过资源解析器生成BeanDefinition，将所有的BeanDefinition包括Bean、BeanFactoryPostProcessor、BeanPostProcessor，缓存到工厂类的beanDefinitionMap中</li>
