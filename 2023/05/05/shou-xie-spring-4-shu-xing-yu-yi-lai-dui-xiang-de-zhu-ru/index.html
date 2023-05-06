@@ -5,7 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="手写Spring(4)：属性与依赖对象的注入, Tomoyo">
-    <meta name="description" content="属性与依赖对象注入在将Bean实例化之后，需要将对象类中的属性(基本属性和对象属性)填充进行对应的实例中。所以我们在原本AbstractAutowireCapableBeanFactory的createBean方法中创建好实例后，进行属性填">
+    <meta name="description" content="源码传送门
+属性与依赖对象注入在将Bean实例化之后，需要将对象类中的属性(基本属性和对象属性)填充进行对应的实例中。所以我们在原本AbstractAutowireCapableBeanFactory的createBean方法中创建好实例后">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -483,7 +484,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="属性与依赖对象注入"><a href="#属性与依赖对象注入" class="headerlink" title="属性与依赖对象注入"></a>属性与依赖对象注入</h1><p>在将Bean实例化之后，需要将对象类中的属性(基本属性和对象属性)填充进行对应的实例中。所以我们在原本AbstractAutowireCapableBeanFactory的createBean方法中创建好实例后，进行属性填充操作。</p>
+                <p><a target="_blank" rel="noopener" href="https://github.com/tomoyoooo/My_Spring">源码传送门</a></p>
+<h1 id="属性与依赖对象注入"><a href="#属性与依赖对象注入" class="headerlink" title="属性与依赖对象注入"></a>属性与依赖对象注入</h1><p>在将Bean实例化之后，需要将对象类中的属性(基本属性和对象属性)填充进行对应的实例中。所以我们在原本AbstractAutowireCapableBeanFactory的createBean方法中创建好实例后，进行属性填充操作。</p>
 <p><em><strong>其中非基本类型的属性需要在存入PropertyValue时使用BeanReference包装，在属性注入的时候判断当前属性是否为BeanReference类型，是的话需要实例化后再注入，且需要注意递归调用。</strong></em></p>
 <p><img src="/2023/05/05/shou-xie-spring-4-shu-xing-yu-yi-lai-dui-xiang-de-zhu-ru/4.%E5%B1%9E%E6%80%A7%E4%B8%8E%E4%BE%9D%E8%B5%96%E5%AF%B9%E8%B1%A1%E6%B3%A8%E5%85%A5.png"></p>
 <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
