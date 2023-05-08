@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>手写Spring(10)：事件与事件监听器</title>
+      <link href="/2023/05/08/shou-xie-spring-10-shi-jian-yu-shi-jian-jian-ting-qi/"/>
+      <url>/2023/05/08/shou-xie-spring-10-shi-jian-yu-shi-jian-jian-ting-qi/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://github.com/tomoyoooo/My_Spring">源码传送门</a></p><h1 id="容器事件和事件监听器"><a href="#容器事件和事件监听器" class="headerlink" title="容器事件和事件监听器"></a>容器事件和事件监听器</h1><p>Spring的IOC容器还有一个Event事件功能，利用观察者模式，提供定义事件、发布事件和监听事件的功能，可以利用这些功能将各个部分功能的耦合度降低，比如用户注册成功后的一些提醒操作不会影响到用户本身的其他操作。</p><p><img src="/2023/05/08/shou-xie-spring-10-shi-jian-yu-shi-jian-jian-ting-qi/10.%E5%AE%B9%E5%99%A8%E4%BA%8B%E4%BB%B6%E5%92%8C%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E5%99%A8.png"></p><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol><li>AbstractApplicationContext的refresh流程方法中先初始化广播器ApplicationEventMulticaster(此处需要缓存所有的监听器)，将其注册为一个单例Bean</li><li>然后从配置文件中读取出所有实现了监听接口的Bean，将其注册到广播器的缓存池中</li><li>上下文继承了事件发布的接口，一旦有事件进行发布会调用publishEvent方法，广播器会将事件传播给对应类型的监听器进行处理</li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>事件和事件监听器功能最大的作用是将多条不同的功能线路进行解耦，能够让各个功能块执行自己功能的同时，对其他功能块实现一些通知功能，传递对应的信息和状态。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 源码学习 </tag>
+            
+            <tag> Spring </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>手写Spring(9)：不同作用域的Bean与FactoryBean</title>
+      <link href="/2023/05/08/shou-xie-spring-9-bu-tong-zuo-yong-yu-de-bean-yu-factorybean/"/>
+      <url>/2023/05/08/shou-xie-spring-9-bu-tong-zuo-yong-yu-de-bean-yu-factorybean/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://github.com/tomoyoooo/My_Spring">源码传送门</a></p><h1 id="不同作用域的Bean与FactoryBean"><a href="#不同作用域的Bean与FactoryBean" class="headerlink" title="不同作用域的Bean与FactoryBean"></a>不同作用域的Bean与FactoryBean</h1><p>Bean有多种作用域，之前只实现了Singleton作用域的Bean，现在加上Prototype，同时实现FactoryBean方式对Bean的自定义实例化。</p><ol><li><p>FactoryBean的作用：是IOC容器创建Bean的一种形式，用户通过实现FactoryBean接口来自定义Bean的实例化过程。相当于在IOC基础上添加了简单工厂模式和装饰器模式，用户可以使用getObject方式自定义实例化Bean。</p></li><li><p>Bean的作用域：singleton、prototype、request、session、application、websocket等</p><pre class="line-numbers language-none"><code class="language-none">其中singleton是有状态会话Bean，也就是每个用户私有一个实例，用户实例结束时Bean也会销毁。而prototype是无状态会话Bean，Bean实例化后加入绘画吃，各个用户进行共用，不会随着一个用户实例结束而销毁。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li></ol><p><img src="/2023/05/08/shou-xie-spring-9-bu-tong-zuo-yong-yu-de-bean-yu-factorybean/9.%E4%B8%8D%E5%90%8C%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84Bean%E4%B8%8EFactoryBean.png"></p><h2 id="prototype作用域的bean创建步骤"><a href="#prototype作用域的bean创建步骤" class="headerlink" title="prototype作用域的bean创建步骤"></a>prototype作用域的bean创建步骤</h2><ol><li>将作用域作为属性加入BeanDefinition，在读取配置文件时将其存储下来</li><li>在实例化Bean的时候判断当前Bean是否是单例的，是的话加入单例Bean缓存，不是的话直接进行返回</li><li>在销毁期间也注意对单例Bean和非单例Bean的区别操作</li></ol><h2 id="FactoryBean创建步骤"><a href="#FactoryBean创建步骤" class="headerlink" title="FactoryBean创建步骤"></a>FactoryBean创建步骤</h2><ol><li>在配置文件中注册需要被执行的接口，如IUserDao</li><li>代理工厂类ProxyBeanFactory继承FactoryBean接口</li><li>创建Bean对象后，需要判断是否为FactoryBean，且还需要判断是否为单例Bean；如果既是FactoryBean也是单例Bean的话，需要存入对应的缓存中</li><li>在代理工厂类ProxyBeanFactory中代理执行原UserDao的方法进行初始化等等</li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​针对新的作用域Bean进行了扩展，同时扩展了Bean的创建方式，用配置文件创建Bean会需要大量的配置信息，所以才会有FactoryBean的出现，方便用户自定义创建</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 源码学习 </tag>
+            
+            <tag> Spring </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>手写Spring(8)：Aware感知容器对象</title>
       <link href="/2023/05/07/shou-xie-spring-8-aware-gan-zhi-rong-qi-dui-xiang/"/>
       <url>/2023/05/07/shou-xie-spring-8-aware-gan-zhi-rong-qi-dui-xiang/</url>
